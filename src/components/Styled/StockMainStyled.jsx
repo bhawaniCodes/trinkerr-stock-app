@@ -57,11 +57,18 @@ const UserNameDiv = styled.div`
     font-weight: 700;
 
     & > :nth-child(2) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         & > :nth-child(1) {
             margin-right: 1em;
+            outline: none;
+            border: none;
+            font-size: 0.5em;
+            font-weight: 500;
         }
         & > :nth-child(2) {
-            color: #E7592E;
+            color: #e7592e;
             margin-right: 1em;
         }
     }

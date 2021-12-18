@@ -660,11 +660,6 @@ module.exports = [
         43.31
     ],
     [
-        "ICICIB22::NSE",
-        43.37,
-        43.31
-    ],
-    [
         "SANGHVIMOV::NSE",
         200.9,
         201.8

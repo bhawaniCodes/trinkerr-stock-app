@@ -18,12 +18,6 @@ import {
 export const StockCard = ({ el, handleRemove }) => {
     const name = el[0].split(":")[0];
     const [, todayStockPrice, yesterdayStockPrice] = el;
-    console.log(
-        "todayStockPrice, yesterdayStockPrice:",
-        name,
-        todayStockPrice,
-        yesterdayStockPrice
-    );
     let positive = todayStockPrice > yesterdayStockPrice ? true : false;
     const percentage = (
         (todayStockPrice - yesterdayStockPrice) /

@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from "react";
+import uuid from "react-uuid";
 import {
     MainContainer,
     SearchContainer,
@@ -13,20 +14,19 @@ import {
     AiOutlineFolderAdd,
     AiOutlineClose,
 } from "react-icons/ai";
-import { StockCard } from './StockCard';
-import debounce from 'lodash.debounce';
-import data from '../Static/data';
-import { SearchStockMenu } from './SearchStockMenu';
+import { StockCard } from "./StockCard";
+import debounce from "lodash.debounce";
+import data from "../Static/data";
+import { SearchStockMenu } from "./SearchStockMenu";
 
-
-export const StockMain = () => { 
-    const [searchInput, setSearchInput] = useState('');
-    const [actualSearch, setActualSearch] = useState('');
+export const StockMain = () => {
+    const [searchInput, setSearchInput] = useState("");
+    const [actualSearch, setActualSearch] = useState("");
     const [displaySearchList, setDisplaySearchList] = useState(false);
     const [searchArrData, setSearchArrData] = useState([]);
     const [displayArrData, setDisplayArrData] = useState([]);
+    console.log('displayArrData:', displayArrData)
 
-    
     // Search & get Data with debouncing
     const handleSearch = (e) => {
         setSearchInput(e.target.value);
@@ -34,51 +34,66 @@ export const StockMain = () => {
     };
 
     const fnDebounce = useCallback(
-        debounce((txt) => setActualSearch(txt), 500), []
+        debounce((txt) => setActualSearch(txt), 500),
+        []
     );
 
     useEffect(() => {
         getDataFromJson();
-    }, [actualSearch])
+    }, [actualSearch]);
 
-    const getDataFromJson = () => { 
-        let res = data.filter(
-            (el) =>
-                actualSearch.length > 2 ? 
-                el[0]
-                    .split(":")[0]
-                    .toLowerCase()
-                    .startsWith(actualSearch.toLowerCase()) : null
+    const getDataFromJson = () => {
+        let res = data.filter((el) =>
+            actualSearch.length > 2
+                ? el[0]
+                      .split(":")[0]
+                      .toLowerCase()
+                      .startsWith(actualSearch.toLowerCase())
+                : null
         );
         setSearchArrData(res);
         if (res.length > 0) setDisplaySearchList(true);
         else setDisplaySearchList(false);
-    }
+    };
 
     // To Add the data
-    const handleAdd = (name) => { 
-        let addData = searchArrData?.filter((el) => el[0].split(":")[0] === name);
+    const handleAdd = (name) => {
+        let addData = searchArrData?.filter(
+            (el) => el[0].split(":")[0] === name
+        );
         setDisplayArrData([...displayArrData, ...addData]);
-        alert('Stock detail added to list');
-    }
+        alert("Stock detail added to list");
+    };
 
     // To Remove the data
-    const handleRemove = (name) => { 
+    const handleRemove = (name) => {
         let addData = displayArrData?.filter(
             (el) => el[0].split(":")[0] !== name
         );
         setDisplayArrData(addData);
         alert("Stock detail removed from list");
-    }
+    };
 
     // To remove search list
-    const removeSearchList = () => { 
-        setSearchInput('');
-        setActualSearch('');
+    const removeSearchList = () => {
+        setSearchInput("");
+        setActualSearch("");
         setSearchArrData([]);
         setDisplaySearchList(false);
-    }
-    
+    };
+
+    // To sort data
+    const handleSort = (e) => {
+        if (e.target.value === "name") {
+            let sortData = displayArrData.sort();
+            console.log("sortData:", sortData);
+            setDisplayArrData(sortData);
+        } else if (e.target.value === "currentPrice") {
+            let sortData = displayArrData.sort((a, b) => a[1] - b[1]);
+            console.log("sortData1:", sortData);
+            setDisplayArrData(sortData);
+        }
+    };
 
 
     return (
@@ -100,7 +115,11 @@ export const StockMain = () => {
                     </SearchContainer>
                     {displaySearchList &&
                         searchArrData?.map((el) => (
-                            <SearchStockMenu el={el} handleAdd={handleAdd} />
+                            <SearchStockMenu
+                                key={uuid()}
+                                el={el}
+                                handleAdd={handleAdd}
+                            />
                         ))}
 
                     {!displaySearchList && (
@@ -109,7 +128,19 @@ export const StockMain = () => {
                                 <UserNameDiv>
                                     <div>Bhawani Shankar</div>
                                     <div>
-                                        <AiOutlineEdit />
+                                        <select
+                                            required
+                                            name="Sort"
+                                            onChange={handleSort}
+                                        >
+                                            <option disabled selected>
+                                                Sort By
+                                            </option>
+                                            <option value="name">Name</option>
+                                            <option value="currentPrice">
+                                                Current Price
+                                            </option>
+                                        </select>
                                         <AiOutlineDelete />
                                     </div>
                                 </UserNameDiv>
@@ -117,6 +148,7 @@ export const StockMain = () => {
                             {displayArrData.length > 0 &&
                                 displayArrData?.map((el) => (
                                     <StockCard
+                                        key={uuid()}
                                         el={el}
                                         handleRemove={handleRemove}
                                     />
@@ -136,4 +168,4 @@ export const StockMain = () => {
             </FooterDiv>
         </>
     );
-}
+};
