@@ -25,7 +25,7 @@ export const StockMain = () => {
     const [displaySearchList, setDisplaySearchList] = useState(false);
     const [searchArrData, setSearchArrData] = useState([]);
     const [displayArrData, setDisplayArrData] = useState([]);
-    console.log('displayArrData:', displayArrData)
+    const [sortName, setSortName] = useState('');
 
     // Search & get Data with debouncing
     const handleSearch = (e) => {
@@ -84,6 +84,7 @@ export const StockMain = () => {
 
     // To sort data
     const handleSort = (e) => {
+        setSortName(e.target.value)
         if (e.target.value === "name") {
             let sortData = displayArrData.sort();
             console.log("sortData:", sortData);
@@ -101,7 +102,7 @@ export const StockMain = () => {
             <MainContainer>
                 <div>
                     <SearchContainer displaySearchList={displaySearchList}>
-                        <SearchInputAboveDiv>
+                        <SearchInputAboveDiv style={{border : searchInput === '' ? "3px solid #f3f3f3" : "3px solid #3fa9ff"}}>
                             <input
                                 type="text"
                                 placeholder="Search stocks..."

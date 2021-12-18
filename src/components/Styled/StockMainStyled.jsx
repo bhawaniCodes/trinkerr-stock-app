@@ -9,7 +9,8 @@ const SearchContainer = styled.div`
     margin: auto;
     height: 8rem;
     display: flex;
-    border-bottom: ${(props) => props.displaySearchList ? "none" : "3px solid #f3f3f3"};
+    border-bottom: ${(props) =>
+        props.displaySearchList ? "none" : "3px solid #f3f3f3"};
 `;
 
 const SearchInputAboveDiv = styled.div`
@@ -64,8 +65,8 @@ const UserNameDiv = styled.div`
             margin-right: 1em;
             outline: none;
             border: none;
-            font-size: 0.5em;
-            font-weight: 500;
+            font-size: 0.6em;
+            font-weight: 600;
         }
         & > :nth-child(2) {
             color: #e7592e;
@@ -76,17 +77,40 @@ const UserNameDiv = styled.div`
 
 const FooterDiv = styled.span`
     width: 55%;
-    margin:auto;
+    margin: -3px auto;
     margin-bottom: 0px;
     bottom: 0;
-    height: 4em;
-    background: gray;
+    height: 3em;
+    background: #fcfcfc;
+    border: 3px solid #eeeeee;
     display: flex;
     justify-content: space-between;
-    
+    align-items: center;
+    font-size: 25px;
+    text-align: center;
 
     & > :nth-child(1) {
-        width
+        width: 7rem;
+        border-right: 3px solid #eeeeee;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    & > :nth-child(2) {
+        color: #3fa9ff;
+        width: 15rem;
+        height: 100%;
+        display: flex;
+        border: 3px solid #3fa9ff;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        font-weight: 600;
+        & > :nth-child(1) {
+            margin-right: 0.7em;
+            margin-top: 0.3em;
+        }
     }
 `;
 
