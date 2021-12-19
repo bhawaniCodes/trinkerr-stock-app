@@ -81,7 +81,12 @@ const FooterDiv = styled.span`
     margin-bottom: 0px;
     bottom: 0;
     height: 3em;
-    background: #fcfcfc;
+    background: rgb(253, 253, 253);
+    background: linear-gradient(
+        180deg,
+        rgba(253, 253, 253, 1) 0%,
+        rgba(226, 226, 226, 1) 100%
+    );
     border: 3px solid #eeeeee;
     display: flex;
     justify-content: space-between;

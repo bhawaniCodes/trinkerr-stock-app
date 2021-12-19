@@ -25,7 +25,7 @@ export const StockMain = () => {
     const [displaySearchList, setDisplaySearchList] = useState(false);
     const [searchArrData, setSearchArrData] = useState([]);
     const [displayArrData, setDisplayArrData] = useState([]);
-    const [sortName, setSortName] = useState('');
+    const [sortName, setSortName] = useState("");
 
     // Search & get Data with debouncing
     const handleSearch = (e) => {
@@ -61,17 +61,52 @@ export const StockMain = () => {
         let addData = searchArrData?.filter(
             (el) => el[0].split(":")[0] === name
         );
+        addData[0][3] = true;
         setDisplayArrData([...displayArrData, ...addData]);
         alert("Stock detail added to list");
     };
 
     // To Remove the data
     const handleRemove = (name) => {
-        let addData = displayArrData?.filter(
-            (el) => el[0].split(":")[0] !== name
-        );
+
+        let addData = [];
+        for (let i = 0; i < displayArrData.length; i++) {
+            if (displayArrData[i][0].split(":")[0] === name) {
+                displayArrData[i].pop();
+                addData.push(displayArrData[i]);
+            } else {
+                addData.push(displayArrData[i]);
+            }
+        }
         setDisplayArrData(addData);
-        alert("Stock detail removed from list");
+
+        let updatedData = addData?.filter((el) => el[0].split(":")[0] !== name);
+        setDisplayArrData(updatedData);
+    };
+
+    // To Remove all the data
+    const handleRemoveAll = () => {
+        if (displayArrData.length > 0) {
+            if (
+                window.confirm(
+                    "Are you sure, Do you want to remove all stock details"
+                )
+            ) {
+                 let addData = [];
+                 for (let i = 0; i < displayArrData.length; i++) {
+                     if (displayArrData[i].length > 3) {
+                         displayArrData[i].pop();
+                         addData.push(displayArrData[i]);
+                     } else {
+                         addData.push(displayArrData[i]);
+                     }
+                 }
+                 setDisplayArrData(addData);
+                setDisplayArrData([]);
+            }
+        } else {
+            alert("Please add stock first");
+        }
     };
 
     // To remove search list
@@ -84,25 +119,29 @@ export const StockMain = () => {
 
     // To sort data
     const handleSort = (e) => {
-        setSortName(e.target.value)
+        setSortName(e.target.value);
         if (e.target.value === "name") {
             let sortData = displayArrData.sort();
-            console.log("sortData:", sortData);
             setDisplayArrData(sortData);
         } else if (e.target.value === "currentPrice") {
             let sortData = displayArrData.sort((a, b) => a[1] - b[1]);
-            console.log("sortData1:", sortData);
             setDisplayArrData(sortData);
         }
     };
-
 
     return (
         <>
             <MainContainer>
                 <div>
                     <SearchContainer displaySearchList={displaySearchList}>
-                        <SearchInputAboveDiv style={{border : searchInput === '' ? "3px solid #f3f3f3" : "3px solid #3fa9ff"}}>
+                        <SearchInputAboveDiv
+                            style={{
+                                border:
+                                    searchInput === ""
+                                        ? "3px solid #f3f3f3"
+                                        : "3px solid #3fa9ff",
+                            }}
+                        >
                             <input
                                 type="text"
                                 placeholder="Search stocks..."
@@ -120,6 +159,7 @@ export const StockMain = () => {
                                 key={uuid()}
                                 el={el}
                                 handleAdd={handleAdd}
+                                handleRemove={handleRemove}
                             />
                         ))}
 
@@ -142,7 +182,10 @@ export const StockMain = () => {
                                                 Current Price
                                             </option>
                                         </select>
-                                        <AiOutlineDelete />
+                                        <AiOutlineDelete
+                                            style={{ cursor: "pointer" }}
+                                            onClick={handleRemoveAll}
+                                        />
                                     </div>
                                 </UserNameDiv>
                             </UserNameDivMain>

@@ -27,6 +27,26 @@ const AddButton = styled.button`
         background: #e5fbf8;
     }
 `;
+
+const RemoveButtom = styled.button`
+    width: 4rem;
+    height: 3.5rem;
+    z-index: 2;
+    right: 10rem;
+    position: absolute;
+    background: #ffffff;
+    color: #ff0000;
+    font-size: 40px;
+    font-weight: 0;
+    border: 1px solid #dbdbdb;
+    display: none;
+    border: 4px;
+    padding-top: 0.5rem;
+
+    :hover {
+        background: #fff2f2;
+    }
+`;
 const GridCard = styled.div`
     position: relative;
     height: 6em;
@@ -87,4 +107,5 @@ export {
     PriceSpan,
     DiscountSpan,
     AddButton,
+    RemoveButtom,
 };
